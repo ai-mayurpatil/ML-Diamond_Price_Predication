@@ -26,3 +26,10 @@ The dataset The goal is to predict price of given diamond (Regression Analysis).
 
 Dataset Source Link : https://www.kaggle.com/competitions/playground-series-s3e8/data?select=train.csv
 
+# Project Structure
+## 1. Create Virtual Environment
+```bash
+- conda create -p venv python=3.11
+- conda activate "Path"
+```
+
