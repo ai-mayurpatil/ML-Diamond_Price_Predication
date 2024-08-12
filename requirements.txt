@@ -1,0 +1,7 @@
+pandas
+numpy
+seaborn
+flask
+
+# Link for setup file and run
+#-e .
