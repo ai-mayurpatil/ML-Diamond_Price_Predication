@@ -77,4 +77,12 @@ setup(
 ```bash
 - python setup.py install
 ```
-
+## 3. Folders for projects distribution.
+### `Folder Structure`
+> __Folder Information__
+> *  `src\` : Lifecycle of project.
+>       *  `src\pipelines` : Here Prediction & Training pipeline.
+>       *  `src\components` : Here Data Ingestion, Transformation, Model Trainer.
+>       *   _logger_, _exception_, __utils:__ for use all common code and functionality for project file.
+> *  `artifacts\` : Preprocessing data store in local.
+> * `notebook\data` : All train model.
