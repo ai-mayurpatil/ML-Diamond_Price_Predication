@@ -39,6 +39,9 @@ pandas
 numpy
 seaborn
 flask
+
+# Link for setup file and run
+#-e .
 ```
 ### `setup.py`
 ```python
@@ -73,9 +76,9 @@ setup(
 
     )
 ```
-
+Run Command:
 ```bash
-- python setup.py install
+python setup.py install
 ```
 ## 3. Folders for projects distribution.
 ### `Folder Structure`
@@ -86,3 +89,76 @@ setup(
 >       *   _logger_, _exception_, __utils:__ for use all common code and functionality for project file.
 > *  `artifacts\` : Preprocessing data store in local.
 > * `notebook\data` : All train model.
+
+## 4. Create logging and exception files for project.
+### `logger.py`
+The code initializes a logging system that writes detailed logs (including timestamps and error levels) to a file named after the current date and time, stored in a logs directory.
+```python
+# Import necessary packages
+import logging 
+import os
+from datetime import datetime
+
+# Log file name set by date, hour, min, sec
+LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+
+# Define the log directory path
+logs_dir = os.path.join(os.getcwd(), "logs")
+
+# Create the log directory if it doesn't exist
+os.makedirs(logs_dir, exist_ok=True)
+
+# Define the full log file path
+LOG_FILE_PATH = os.path.join(logs_dir, LOG_FILE)
+
+# Basic configuration for logging
+logging.basicConfig(
+    filename=LOG_FILE_PATH,
+    format="[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO
+)
+
+```
+***
+### `exception.py`
+The code is a framework for handling exceptions in a detailed and structured way, logging specific error information, and raising a custom exception to provide more context about what went wrong.
+```python
+# Import necessary packages and modules
+import sys
+from src.logger import logging
+
+# Function to create a detailed error messagee
+def error_message_detail(error,error_detail:sys):
+    _,_,exc_tb = error_detail.exc_info()
+    file_name = exc_tb.tb_frame.f_code.co_filename
+
+    error_message = "Error occured in python script name [{0}] line number [{1}] error message [{2}]".format(
+        file_name, exc_tb.tb_lineno, str(error)
+    )
+
+    return error_message
+
+# Custom exception class to handle and log exceptions
+class CustomException(Exception):
+    
+    def __init__(self, error_message, error_detail:sys):
+        super().__init__(error_message)
+        self.error_message = error_message_detail(error_message, error_detail=error_detail)
+
+    def __str__(self):
+        return self.error_message  
+    
+# Entry point of code run
+if __name__=="__main__":
+    logging.info("Logging has started")
+
+    try:
+        a=1/0
+    except Exception as e:
+        logging.info('Division by zero') 
+        raise CustomException(e,sys)
+```
+Run Command:
+```bash
+python -m src.exception
+```
