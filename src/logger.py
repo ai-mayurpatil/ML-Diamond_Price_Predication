@@ -1,21 +1,21 @@
-# Import Packages
+# Import necessary packages
 import logging 
 import os
 from datetime import datetime
 
-# Log file name set by date,hour,min,sec
-LOG_FILE=f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+# Log file name set by date, hour, min, sec
+LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
 
-# Create log folder and apend log file
-logs_path=os.path.join(os.getcwd(),"logs",LOG_FILE)
+# Define the log directory path
+logs_dir = os.path.join(os.getcwd(), "logs")
 
-# Create log path folder
-os.makedirs(logs_path,exist_ok=True)
+# Create the log directory if it doesn't exist
+os.makedirs(logs_dir, exist_ok=True)
 
-# Log file path and apend log file name
-LOG_FILE_PATH=os.path.join(logs_path,LOG_FILE)
+# Define the full log file path
+LOG_FILE_PATH = os.path.join(logs_dir, LOG_FILE)
 
-# basic configuration
+# Basic configuration for logging
 logging.basicConfig(
     filename=LOG_FILE_PATH,
     format="[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",
